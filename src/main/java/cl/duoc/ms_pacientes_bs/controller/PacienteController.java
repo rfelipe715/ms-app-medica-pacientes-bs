@@ -1,7 +1,6 @@
 package cl.duoc.ms_pacientes_bs.controller;
 
 import cl.duoc.ms_pacientes_bs.dto.PacienteDto;
-import cl.duoc.ms_pacientes_bs.model.Paciente;
 import cl.duoc.ms_pacientes_bs.service.PacienteService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,8 +16,8 @@ public class PacienteController {
     private PacienteService pacienteService;
 
     @PostMapping
-    public ResponseEntity<Paciente> registrarPaciente(@Valid @RequestBody PacienteDto pacienteDto) {
-        Paciente nuevoPaciente = pacienteService.registrarPaciente(pacienteDto);
+    public ResponseEntity<PacienteDto> registrarPaciente(@Valid @RequestBody PacienteDto pacienteDto) {
+        PacienteDto nuevoPaciente = pacienteService.registrarPaciente(pacienteDto);
         return new ResponseEntity<>(nuevoPaciente, HttpStatus.CREATED);
     }
 }
