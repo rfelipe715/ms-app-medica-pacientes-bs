@@ -1,6 +1,7 @@
 package cl.duoc.ms_pacientes_bs.controller;
 
 import cl.duoc.ms_pacientes_bs.dto.PacienteDto;
+import cl.duoc.ms_pacientes_bs.dto.PacienteConCitasDto;
 import cl.duoc.ms_pacientes_bs.service.PacienteService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,12 +32,33 @@ public class PacienteController {
         return new ResponseEntity<>(pacientes, HttpStatus.OK);
     }
 
+    // R - Read (Obtener todos con citas)
+    @GetMapping("/con-citas")
+    public ResponseEntity<List<PacienteConCitasDto>> obtenerTodosConCitas() {
+        List<PacienteConCitasDto> pacientes = pacienteService.obtenerTodosConCitas();
+        return new ResponseEntity<>(pacientes, HttpStatus.OK);
+    }
+
     // R - Read (Obtener por ID)
     @GetMapping("/{id}")
     public ResponseEntity<PacienteDto> obtenerPorId(@PathVariable Long id) {
         try {
             PacienteDto paciente = pacienteService.obtenerPorId(id);
             return new ResponseEntity<>(paciente, HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
+
+    // R - Read (Obtener por ID con citas)
+    @GetMapping("/{id}/con-citas")
+    public ResponseEntity<PacienteConCitasDto> obtenerPorIdConCitas(@PathVariable Long id) {
+        try {
+            PacienteConCitasDto paciente = pacienteService.obtenerPorIdConCitas(id);
+            if (paciente != null) {
+                return new ResponseEntity<>(paciente, HttpStatus.OK);
+            }
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
