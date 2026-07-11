@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@FeignClient(name = "ms-pacientes-db", url = "localhost:8082/api/pacientes")
+@FeignClient(name = "ms-pacientes-db", url = "${ms-pacientes-db.url}")
 public interface PacienteClient {
 
     // C - Create
